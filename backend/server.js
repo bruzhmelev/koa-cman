@@ -5,6 +5,7 @@ const Cors = require('@koa/cors');
 const BodyParser = require('koa-bodyparser');
 const Helmet = require('koa-helmet');
 const respond = require('koa-respond');
+const mongoose = require('mongoose');
 
 const app = new Koa();
 const router = new Router();
@@ -33,5 +34,7 @@ app.use(respond());
 require('./routes')(router);
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+mongoose.connect('mongodb://test_user:test_pass0@ds022228.mlab.com:22228/cman');
 
 module.exports = app;
