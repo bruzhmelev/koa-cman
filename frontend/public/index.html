@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+    <script type="text/javascript" src="./libs/jsview/jsview.dom.js"></script>
+    <script type="text/javascript" src="./libs/jsview/jsview.Template.js"></script>  
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+
+    <div id="host" class="host wide">
+      <div>
+          Время: <span data-text="{hero.time}" data-at-class="{hero.late?'attention':''}"></span> |
+          Деньги: <span data-text="{hero.score}"></span> |
+          <span data-each="stat,statName in hero.stats"><span data-text="{stats[statName].title}"></span>: <span data-text="{hero.stats[statName]}"></span>&nbsp; </span> |
+          Раунд: <span data-text="{hero.round}"></span> |
+          Поездка: <span data-text="{hero.trip}"></span> |
+          Цель: <span data-text="{locations[hero.targetId].title}"></span>
+      </div>
+      <hr />
+      <div id="tasks">
+          <div class="title">Мои заказы</div>
+          <table data-at-class="{hero.tasks.length?'visible':'hidden'}">
+              <tr data-each="task,taskIndex in hero.tasks">
+                  <td><span data-text="{locations[task.targetId].title}"></span></td>
+                  <td style="text-align:right"><span data-text="{task.price}"></span> руб.</td>
+                  <td><span data-text="{task.status}"></span></td>
+              </tr>
+          </table>
+      </div>
+      <hr />
+      <div id="init" data-at-class="{hero.stageId=='init'?'visible':'hidden'}">
+          <div class="title" data-text="{stages[hero.stageId].title}"></div>
+          <div>Распрелите очки между характеристиками. Осталось: <span data-text="{hero.points}"></span></div>
+          <table>
+              <tr data-each="statValue,statName in hero.stats">
+                  <td><span data-text="{stats[statName].title}"></span></td>
+                  <td style="text-align:right"><span data-text="{statValue}"></span></td>
+                  <td><span class="button" data-on-click="allocatePoint(statName)">+</span></td>
+              </tr>
+          </table>
+      </div>
+      <div id="home" data-at-class="{hero.stageId=='home'?'visible':'hidden'}">
+          <div class="title" data-text="{stages[hero.stageId].title}"></div>
+          <div data-at-class="button {hero.points?'visible':'hidden'}" data-on-click="rest()">Отдохнуть</div>
+          <div class="button" data-on-click="startOrders()">Взять заказы</div>
+      </div>
+      <div id="orders" data-at-class="{hero.stageId=='orders'?'visible':'hidden'}">
+          <div class="panel1">
+              <div class="title" data-text="{stages[hero.stageId].title}"></div>
+              <table data-at-class="{orders?'visible':'hidden'}">
+                  <tr data-each="order,orderIndex in orders">
+                      <td><span data-text="{order.text}"></span></td>
+                      <td><span data-text="{locations[order.targetId].title}"></span></td>
+                      <td style="text-align:right"><span data-text="{order.price}"></span> руб.</td>
+                      <td><span class="button" data-on-click="addOrder(orderIndex)">Выбрать</span></td>
+                  </tr>
+              </table>
+              <div class="button" data-on-click="finishOrders()">Готово</div>
+          </div>
+          <div class="panel2">
+              <table>
+                  <tr data-each="road in roads">
+                      <td><span data-text="{locations[road.sourceId].title}"></span></td>
+                      <td><span data-text="{locations[road.targetId].title}"></span></td>
+                      <td style="text-align:right"><span data-text="{road.duration}"></span> мин.</td>
+                  </tr>
+              </table>
+          </div>
+      </div>
+      <div id="map" data-at-class="{hero.stageId=='map'?'visible':'hidden'}">
+          <div class="panel1">
+              <div class="title" data-text="{stages[hero.stageId].title}"></div>
+              <div class="button" data-on-click="goHome()">Домой</div>
+              <table data-at-class="{routes.length?'visible':'hidden'}">
+                  <tr data-each="route in routes">
+                      <td><span data-text="{locations[route.sourceId].title}"></span></td>
+                      <td><span data-text="{locations[route.targetId].title}"></span></td>
+                      <td style="text-align:right"><span data-text="{route.duration}"></span> мин.</td>
+                      <td><span data-at-class="button" data-on-click="startTrip(route.roadId)">Выбрать</span></td>
+                  </tr>
+              </table>
+          </div>
+          <div class="panel2">
+              <table>
+                  <tr data-each="road in roads">
+                      <td><span data-text="{locations[road.sourceId].title}"></span></td>
+                      <td><span data-text="{locations[road.targetId].title}"></span></td>
+                      <td style="text-align:right"><span data-text="{road.duration}"></span> мин.</td>
+                  </tr>
+              </table>
+          </div>
+      </div>
+      <div id="event" data-at-class="{hero.eventIndex==null?'hidden':'visible'}" data-using="event:events[hero.eventIndex]">
+          <div class="title" data-text="{stages[hero.stageId].title}"></div>
+          <div data-text="{event.text}"></div>
+          <div data-each="choice,choiceIndex in event.choices">
+              <div data-at-class="button {hero.choiceIndex==choiceIndex?'selected':''}" data-text="{choice.text}" data-on-click="makeChoice(choiceIndex)"></div>
+          </div>
+          <hr />
+      </div>
+      <div id="outcome" data-at-class="{hero.outcomeIndex==null?'hidden':'visible'}" data-using="event:events[hero.eventIndex];choice:event.choices[hero.choiceIndex];outcome:choice.outcomes[hero.outcomeIndex]">
+          <div data-text="{outcome.text}"></div>
+          <div class="button" data-on-click="nextEvent()">Дальше</div>
+      </div>
+  </div>
+  </body>
+</html>

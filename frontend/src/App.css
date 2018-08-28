@@ -1,0 +1,42 @@
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.host2 {
+  font-family: Arial, Helvetica, serif;
+  -webkit-font-smoothing: antialiased;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  position: absolute;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  background-color: black;
+  color: white;
+
+  padding: 20px;
+}
+
+.host2.wide2 {
+  position: absolute;
+  left: 80px;
+  top: 40px;
+  right: 80px;
+  bottom: 510px;
+  border-width: 0px;
+}
+
+.right {
+  text-align:right
+}
+

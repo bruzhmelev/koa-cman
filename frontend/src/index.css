@@ -1,0 +1,121 @@
+html, body, p, h1, h2, h3, h4, h5, h6, ul, li, ol, form, input, span, img, fieldset, legend, label, a, article, aside, audio, canvas, datalist, details, figure, footer, header, hgroup, mark, menu, meter, nav, output, progress, section, time, video, nobr {
+  margin: 0px;
+  padding: 0px;
+}
+
+.clear {
+  clear: both;
+  height: 1px;
+}
+
+.none {
+  display: none;
+}
+
+.nowrap {
+  white-space:nowrap;
+}
+
+.unselectable {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+body {
+  background-color: #3a3a3a;
+  color: white;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.host {
+  font-family: Arial, Helvetica, serif;
+  -webkit-font-smoothing: antialiased;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  position: absolute;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  background-color: black;
+  color: white;
+
+  padding: 20px;
+}
+
+.host.wide {
+  position: absolute;
+  left: 80px;
+  top: 450px;
+  right: 80px;
+  bottom: 40px;
+  border-width: 0px;
+}
+
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+span.visible {
+  display: inline;
+}
+
+span.hidden {
+  display: none;
+}
+
+table {
+  border-spacing: 2px;
+  border-collapse: separate;
+}
+
+td {
+  padding: 4px;
+}
+
+hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.button {
+  cursor: pointer;
+  color: yellow;
+  margin-top: 10px;
+}
+
+.button.selected{
+  font-weight: bold;
+}
+
+.title {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.attention {
+  color: purple;
+}
+
+
+
+.panel1 {
+  display: inline-block;
+}
+
+.panel2 {
+  display: inline-block;
+  float: right;
+}
