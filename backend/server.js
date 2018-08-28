@@ -33,6 +33,7 @@ app.use(respond());
 // API routes
 require('./routes')(router);
 app.use(router.routes());
+app.use(require('koa-static')('./build'));
 app.use(router.allowedMethods());
 
 mongoose.connect('mongodb://test_user:test_pass0@ds022228.mlab.com:22228/cman');

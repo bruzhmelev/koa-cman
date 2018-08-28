@@ -32,6 +32,7 @@
     "koa-logger": "^3.2.0",
     "koa-respond": "^1.0.1",
     "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
     "mongoose": "^5.2.10"
   },
   "devDependencies": {

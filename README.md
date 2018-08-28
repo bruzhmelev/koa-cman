@@ -2,29 +2,31 @@
 
 ## Запуск
 
-### Бекенд
+### Бекенд и фротенд запуск локально
 
 ```
-cd ./backend
-npm i
-npm run dev
-```
-
-`http://localhost:4000/v1/players`
-
-### Фронт
-
-```
-cd ./frontend
 npm i
 npm start
 ```
 
+API бекенда запустится:
+
+`http://localhost:4000/v1/players`
+
+Фронт откроется:
+
 `http://localhost:3000/`
+
+### Для прод билда
+
+```
+npm run build
+```
 
 ## Todo
 
 - 3. Add Koa static to backend to serve up compiled React app:
+- Step 5: Building the UI for our App
 - [Error] `[nodemon] app crashed - waiting for file changes before starting...` Запускается если на любом файле из бекенда нажать Ctrl+S
 
 ## We have a functional backend with CRUD operations talking to our database. Examples:
