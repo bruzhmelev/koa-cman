@@ -25,7 +25,11 @@ npm run build
 
 ## Todo
 
+- Fetching data from backend (
+  player {name, bestScore}
+  playerActions (allocatePoint, rest, startOrder, finishOrder, addOrder, goHome, startTrip, makeChoice, next))
 - Moving State Management to Redux
+- Moving all sideeffect to sagas
 
 ## Issues
 
