@@ -29,10 +29,12 @@ npm run build
   player {name, bestScore}
   playerActions (allocatePoint, rest, startOrder, finishOrder, addOrder, goHome, startTrip, makeChoice, next))
 - Moving State Management to Redux
+  -- Typing for every action in reducer
 - Moving all sideeffect to sagas
 
 ## Issues
 
+- DEFAULT_STATE `Argument of type '{ player: ... is not assignable to parameter of type 'DeepPartial<{ player: any; }>'.`
 - [Error] `[nodemon] app crashed - waiting for file changes before starting...` Проходит, если на любом файле из бекенда нажать Ctrl+S
 
 ## We have a functional backend with CRUD operations talking to our database. Examples:
