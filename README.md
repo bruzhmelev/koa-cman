@@ -25,9 +25,11 @@ npm run build
 
 ## Todo
 
-- 3. Add Koa static to backend to serve up compiled React app:
-- Step 5: Building the UI for our App
-- [Error] `[nodemon] app crashed - waiting for file changes before starting...` Запускается если на любом файле из бекенда нажать Ctrl+S
+- Moving State Management to Redux
+
+## Issues
+
+- [Error] `[nodemon] app crashed - waiting for file changes before starting...` Проходит, если на любом файле из бекенда нажать Ctrl+S
 
 ## We have a functional backend with CRUD operations talking to our database. Examples:
 
