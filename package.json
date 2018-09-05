@@ -1,7 +1,6 @@
 {
   "name": "cman",
   "version": "1.0.0",
-  "dependencies": {},
   "scripts": {
     "start": "concurrently — kill-others \"npm run backend\" \"npm run frontend\"",
     "backend": "cd backend && npm run dev",

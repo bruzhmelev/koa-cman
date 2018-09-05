@@ -7,7 +7,8 @@
         "react-dom": "^16.4.2",
         "react-redux": "^5.0.7",
         "react-scripts-ts": "2.17.0",
-        "redux": "^4.0.0"
+        "redux": "^4.0.0",
+        "redux-saga": "^0.16.0"
     },
     "scripts": {
         "start": "react-scripts-ts start",
@@ -23,6 +24,7 @@
         "@types/react-dom": "^16.0.7",
         "@types/react-redux": "^6.0.6",
         "@types/redux": "^3.6.0",
+        "@types/redux-saga": "^0.10.5",
         "typescript": "^3.0.1"
     },
     "proxy": "http://localhost:4000"

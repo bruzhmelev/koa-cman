@@ -1,0 +1,37 @@
+{
+	"variables": [],
+	"info": {
+		"name": "cman",
+		"_postman_id": "e5b24e89-5c20-9558-c7f2-e0cd2a8f0d4a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "player",
+			"description": "",
+			"item": [
+				{
+					"name": "http://localhost:4000/v1/players/5b9036fb2b82c2432527a4c5",
+					"request": {
+						"url": "http://localhost:4000/v1/players/5b9036fb2b82c2432527a4c5",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\": \"Антон\" }"
+						},
+						"description": "update player"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

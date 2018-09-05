@@ -5,7 +5,8 @@ const PlayerSchema = new mongoose.Schema(
   {
     name: { type: String },
     email: { type: String },
-    bestScore: { type: Number }
+    bestScore: { type: Number },
+    done: { type: Boolean }
   },
   { timestamps: true }
 );

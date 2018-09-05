@@ -7,7 +7,7 @@ async function findAll(ctx) {
 }
 
 async function create(ctx) {
-  // Create New Todo from payload sent and save to database
+  // Create New player from payload sent and save to database
   const newPlayer = new Player(ctx.request.body);
   const savedPlayer = await newPlayer.save();
   ctx.body = savedPlayer;
@@ -18,18 +18,24 @@ async function destroy(ctx) {
   const id = ctx.params.id;
   const player = await Player.findById(id);
 
-  // Delete todo from database and return deleted object as reference
+  // Delete player from database and return deleted object as reference
   const deletedPlayer = await player.remove();
   ctx.body = deletedPlayer;
 }
 
 async function update(ctx) {
-  // Find Player based on id, then toggle done on/off
+  // Find Player based on id
   const id = ctx.params.id;
   const player = await Player.findById(id);
-  player.done = !player.done;
+  const newPlayer = ctx.request.body;
 
-  // Update todo in database
+  console.log(JSON.stringify(newPlayer));
+
+  player.name = newPlayer.name || player.name;
+  player.email = newPlayer.email || player.email;
+  player.bestScore = newPlayer.bestScore || player.bestScore;
+
+  // Update player in database
   const updatedPlayer = await player.save();
   ctx.body = updatedPlayer;
 }

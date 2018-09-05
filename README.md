@@ -5,7 +5,7 @@
 ### Бекенд и фротенд запуск локально
 
 1. Скопировать образец из backend/.env.sample в backend/.env и указать недостающие секреты
-  1. DB_PASSWORD='password' спросить лично или посмотреть в Azure для БД cman
+1. DB_PASSWORD='password' спросить лично или посмотреть в Azure для БД cman
 
 ```
 npm run install-all
@@ -39,6 +39,10 @@ npm run build
 
 - DEFAULT_STATE `Argument of type '{ player: ... is not assignable to parameter of type 'DeepPartial<{ player: any; }>'.`
 - [Error] `[nodemon] app crashed - waiting for file changes before starting...` Проходит, если на любом файле из бекенда нажать Ctrl+S
+
+## Postman
+
+Для Postman запросы будут складываться в `backend/postman`
 
 ## We have a functional backend with CRUD operations talking to our database. Examples:
 
