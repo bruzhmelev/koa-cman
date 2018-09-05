@@ -33,6 +33,7 @@ npm run build
   playerActions (allocatePoint, rest, startOrder, finishOrder, addOrder, goHome, startTrip, makeChoice, next))
 - Moving State Management to Redux
   -- Typing for every action in reducer
+  -- Flow our new Redux actions through our UI
 - Moving all sideeffect to sagas
 
 ## Issues
