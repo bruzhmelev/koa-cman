@@ -4,8 +4,11 @@
 
 ### Бекенд и фротенд запуск локально
 
+1. Скопировать образец из backend/.env.sample в backend/.env и указать недостающие секреты
+  1. DB_PASSWORD='password' спросить лично или посмотреть в Azure для БД cman
+
 ```
-npm i
+npm run install-all
 npm start
 ```
 

@@ -6,6 +6,9 @@
     "start": "concurrently — kill-others \"npm run backend\" \"npm run frontend\"",
     "backend": "cd backend && npm run dev",
     "frontend": "cd frontend && npm start",
+    "ib": "cd backend && npm i && cd ../",
+    "if": "cd frontend && npm i && cd ../",
+    "install-all": "npm i && npm run ib && npm run if",
     "build": "cd frontend && npm run build"
   },
   "devDependencies": {
