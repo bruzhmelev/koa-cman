@@ -36,6 +36,14 @@ app.use(router.routes());
 app.use(require('koa-static')('./build'));
 app.use(router.allowedMethods());
 
-mongoose.connect('mongodb://test_user:test_pass0@ds022228.mlab.com:22228/cman');
+mongoose.connect('mongodb://cman.documents.azure.com:10255/?ssl=true&replicaSet=globaldb',
+  {
+    auth: {
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD
+    }
+  })
+  .then(() => console.log('connection successful'))
+  .catch((err) => console.error(err));
 
 module.exports = app;
