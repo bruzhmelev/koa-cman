@@ -19,11 +19,29 @@ router.post('/localregister', async ctx => {
 
   return passport.authenticate('local', (err, user) => {
     console.log(JSON.stringify({ err, user }));
-    if (existingUsers.length !== 0) {
-      ctx.status = 404;
-      ctx.body = { status: 'error', message: 'Пользователь уже существует' };
-    }
 
+    if (user) {
+      ctx.login(user);
+      ctx.body = user;
+    } else {
+      ctx.status = 400;
+      ctx.body = { status: 'error', err };
+    }
+  })(ctx);
+});
+
+router.post('/login', async ctx => {
+  console.log('/login: ' + JSON.stringify(ctx.request.body));
+  const user = ctx.request.body;
+  const existingUsers = await storage.fetchUsersByName(user.username);
+
+  if (existingUsers.length !== 1) {
+    ctx.status = 404;
+    ctx.body = { status: 'error', message: 'Пользователь не существует' };
+    return;
+  }
+
+  return passport.authenticate('local', (err, user) => {
     if (user) {
       ctx.login(user);
       ctx.body = user;

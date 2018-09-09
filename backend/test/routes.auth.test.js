@@ -6,10 +6,10 @@ const should = chai.should();
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 
-const server = require('../server');
+const app = require('../server');
 
 const port = 4003;
-const app = server.listen(port, () =>
+const server = app.listen(port, () =>
   console.log(`API server started on ${port}`)
 );
 
@@ -18,10 +18,10 @@ describe('routes : auth', () => {
     // prepare data
   });
 
-  describe('POST /auth/localregister', () => {
+  describe('POST /v1/auth/localregister', () => {
     it('should not register exist user', done => {
       chai
-        .request(app)
+        .request(server)
         .post('/v1/auth/localregister')
         .send({
           username: 'testUser',
@@ -36,7 +36,7 @@ describe('routes : auth', () => {
 
     it('should register a new user', done => {
       chai
-        .request(app)
+        .request(server)
         .post('/v1/auth/localregister')
         .send({
           username: 'testUserNew',
@@ -48,6 +48,52 @@ describe('routes : auth', () => {
           res.status.should.equal(200, 'response status should be 200');
           done();
         });
+    });
+
+    describe('POST /v1/auth/login', () => {
+      it('should login a user', done => {
+        // arrange
+        chai
+          .request(server)
+          .post('/v1/auth/localregister')
+          .send({
+            username: 'testUserNew2',
+            password: 'testPassNew2'
+          })
+          .end(() => {
+            // act
+            chai
+              .request(server)
+              .post('/v1/auth/login')
+              .send({
+                username: 'testUserNew2',
+                password: 'testPassNew2'
+              })
+              .end((err, res) => {
+                console.log(JSON.stringify(res));
+                res.status.should.equals(200);
+                res.text.should.contains('"username":"testUserNew2"');
+                done();
+              });
+          });
+      });
+
+      it('shouldn`t login a not existed user', done => {
+        // act
+        chai
+          .request(server)
+          .post('/v1/auth/login')
+          .send({
+            username: 'notexisted',
+            password: 'notexisted'
+          })
+          .end((err, res) => {
+            console.log(JSON.stringify(res));
+            res.status.should.equals(404);
+            res.text.should.contains('"message":"Пользователь не существует"');
+            done();
+          });
+      });
     });
   });
 

@@ -50,6 +50,8 @@ npm run build
     }
     ```
 
+  - current stage `https://mherman.org/blog/user-authentication-with-passport-and-koa/` Logout
+
 ## Issues
 
 - DEFAULT_STATE `Argument of type '{ player: ... is not assignable to parameter of type 'DeepPartial<{ player: any; }>'.`
