@@ -3,6 +3,8 @@ const Router = require('koa-router');
 const Logger = require('koa-logger');
 const Cors = require('@koa/cors');
 const BodyParser = require('koa-bodyparser');
+const session = require('koa-session');
+const passport = require('koa-passport');
 const Helmet = require('koa-helmet');
 const respond = require('koa-respond');
 const mongoose = require('mongoose');
@@ -16,7 +18,13 @@ if (process.env.NODE_ENV === 'development') {
   app.use(Logger());
 }
 
+// sessions
+app.keys = ['super-secret-key'];
+app.use(session(app));
+
 app.use(Cors());
+
+// body parser
 app.use(
   BodyParser({
     enableTypes: ['json'],
@@ -27,6 +35,12 @@ app.use(
     }
   })
 );
+
+// // authentication
+console.log('authentication');
+require('./auth');
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(respond());
 

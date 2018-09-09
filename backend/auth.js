@@ -1,12 +1,5 @@
 const passport = require('koa-passport');
-
-const fetchUser = (() => {
-  // This is an example! Use password hashing in your project and avoid storing passwords in your code
-  const user = { id: 1, username: 'test', password: 'test' };
-  return async function() {
-    return user;
-  };
-})();
+const storage = require('./temp/localUserStorage');
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -14,27 +7,30 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(async function(id, done) {
   try {
-    const user = await fetchUser();
+    const user = await storage.fetchUserById(id);
     done(null, user);
   } catch (err) {
     done(err);
   }
 });
 
-// const LocalStrategy = require('passport-local').Strategy;
-// passport.use(
-//   new LocalStrategy(function(username, password, done) {
-//     fetchUser()
-//       .then(user => {
-//         if (username === user.username && password === user.password) {
-//           done(null, user);
-//         } else {
-//           done(null, false);
-//         }
-//       })
-//       .catch(err => done(err));
-//   })
-// );
+const LocalStrategy = require('passport-local').Strategy;
+passport.use(
+  new LocalStrategy(function(username, password, done) {
+    console.log('LocalStrategy username: ' + username);
+    storage
+      .fetchUsersByName(username)
+      .then(users => {
+        const user = users[0];
+        if (username === user.username && password === user.password) {
+          done(null, user);
+        } else {
+          done(null, false);
+        }
+      })
+      .catch(err => done(err));
+  })
+);
 
 const FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(
@@ -49,7 +45,7 @@ passport.use(
     },
     function(token, tokenSecret, profile, done) {
       // retrieve user ...
-      fetchUser().then(user => done(null, user));
+      storage.fetchUsersByName().then(user => done(null, user));
     }
   )
 );
@@ -67,7 +63,7 @@ passport.use(
 //     },
 //     function(token, tokenSecret, profile, done) {
 //       // retrieve user ...
-//       fetchUser().then(user => done(null, user));
+//       storage.fetchUserByName().then(user => done(null, user));
 //     }
 //   )
 // );
@@ -85,7 +81,7 @@ passport.use(
     },
     function(token, tokenSecret, profile, done) {
       // retrieve user ...
-      fetchUser().then(user => done(null, user));
+      storage.fetchUserByToken().then(user => done(null, user));
     }
   )
 );
