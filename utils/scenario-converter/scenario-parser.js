@@ -14,6 +14,7 @@ class ScenarioParser {
 
       if (line.startsWith('---')) quest = this._processQuest(line);
       else if (line.startsWith('===')) step = this._processStep(line, quest);
+      else if (line.startsWith('?') && parseInt(line.substr(1))) this._processVisit(line, step);
       else if (line.startsWith('?')) this._processCondition(line, step);
       else if (line.startsWith('+') || line.startsWith('-')) this._processAffect(line, step);
       else if (line.startsWith('$')) this._processVariable(line, step);
@@ -45,12 +46,20 @@ class ScenarioParser {
 
   _processCondition(line, step) {
     if (!step.condition) step.condition = {}; 
-    const val = line.substr(1);
-    if (parseInt(val)) {
-      step.condition["visit"] = parseInt(val);
+    const arr = line.substr(1).split(' ');
+    const name = arr[0];
+    
+    if (arr.length == 3) {
+      step.condition[name] = [parseInt(arr[1]), parseInt(arr[2])]      
     } else {
-      step.condition[val] = 1;
+      step.condition[name] = arr.length > 1 ? parseInt(arr[1]) : 1;
     }
+  }
+
+  _processVisit(line, step) {
+    if (!step.condition) step.condition = {};
+    const visitCount = line.substr(1);
+    step.condition["visit"] = parseInt(visitCount);
   }
 
   _processAffect(line, step) {
