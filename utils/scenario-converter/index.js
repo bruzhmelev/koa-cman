@@ -3,6 +3,7 @@ const util = require('util');
 const ScenarioParser = require('./scenario-parser');
 
 fs.readFile = util.promisify(fs.readFile);
+fs.writeFile = util.promisify(fs.writeFile);
 
 (async function main() {
   if (process.argv.length < 3 || !process.argv[2]) 
@@ -12,6 +13,6 @@ fs.readFile = util.promisify(fs.readFile);
   const content = await fs.readFile(filePath, 'utf-8');
   const parser = new ScenarioParser();
   const scenarios = parser.parse(content.toString());
-  console.log(JSON.stringify(scenarios, null, 2));
+  await fs.writeFile('output.json', JSON.stringify(scenarios, null, 2), 'utf-8');
 })()
   .catch(err => console.log(err));
