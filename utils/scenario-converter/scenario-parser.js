@@ -29,7 +29,7 @@ class ScenarioParser {
   _processQuest(line) {
     const quest = {
       name: line.replace(/---/g, '').trim(),
-      steps: {}
+      steps: []
     };    
     this._scenario.push(quest);
     return quest;
@@ -40,7 +40,7 @@ class ScenarioParser {
     const step = {
       name: name
     };
-    quest.steps[name] = step;
+    quest.steps.push(step);
     return step;
   }
 
