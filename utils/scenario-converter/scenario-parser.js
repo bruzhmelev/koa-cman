@@ -89,12 +89,12 @@ class ScenarioParser {
   }
 
   _processText(line, step) {
-    if (!step.text) step.text = []; 
+    if (!step.description) step.description = []; 
     const text = line.replace(/[\r\n]+/g, '');
-    if (step.text.length > 0) {
-      step.text.push({br: true});
+    if (step.description.length > 0) {
+      step.description.push({br: true});
     }
-    step.text.push({text: text});
+    step.description.push({text: text});
   }
 }
 
