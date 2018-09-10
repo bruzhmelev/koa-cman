@@ -10,8 +10,8 @@ fs.readFile = util.promisify(fs.readFile);
 
   const filePath = process.argv[2];
   const content = await fs.readFile(filePath, 'utf-8');
-  // const parser = new ScenarioParser();
-  // parser.parse(content.toString());
-  console.log(content.toString())
+  const parser = new ScenarioParser();
+  const scenarios = parser.parse(content.toString());
+  console.log(JSON.stringify(scenarios, null, 2));
 })()
   .catch(err => console.log(err));

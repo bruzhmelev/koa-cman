@@ -169,3 +169,6 @@ docs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+### Visual Stduio Code ###
+.vscode
