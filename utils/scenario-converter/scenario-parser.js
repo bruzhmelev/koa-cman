@@ -14,6 +14,8 @@ class ScenarioParser {
 
       if (line.startsWith('---')) quest = this._processQuest(line);
       else if (line.startsWith('===')) step = this._processStep(line, quest);
+      else if (line.startsWith('?')) this._processCondition(line, step);
+      else if (line.startsWith('+') || line.startsWith('-')) this._processAffect(line, step);
       else if (line.startsWith('#')) this._processAnswer(line, step);
       else this._processText(line, step);
     });
@@ -38,6 +40,19 @@ class ScenarioParser {
     };
     quest.steps[name] = step;
     return step;
+  }
+
+  _processCondition(line, step) {
+    if (!step.condition) step.condition = {}; 
+    const name = line.substr(1);
+    step.condition[name] = 1;
+  }
+
+  _processAffect(line, step) {
+    if (!step.affect) step.affect = {}; 
+    const sign = line.substr(0, 1);
+    const name = line.substr(1);
+    step.affect[name] = sign === '+' ? 1 : -1;
   }
 
   _processAnswer(line, step) {
