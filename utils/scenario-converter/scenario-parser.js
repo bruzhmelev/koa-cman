@@ -99,11 +99,38 @@ class ScenarioParser {
 
   _processText(line, step) {
     if (!step.description) step.description = []; 
-    const text = line.replace(/[\r\n]+/g, '');
+    
+    let text = line.replace(/[\r\n]+/g, '').trim();
+    if (!text) return;
+
     if (step.description.length > 0) {
       step.description.push({br: true});
     }
-    step.description.push({text: text});
+
+    const groups = text.match(/\[([^\[\]]*)\]/g);
+    if (!groups) {
+      step.description.push({text: text});
+      return;
+    }
+
+    const groupTexts = [];
+    for (let g of groups) {
+      groupTexts.push(this._processGroup(g));
+      text = text.replace(g, '|');
+    }
+    groupTexts.push('');
+
+    const otherTexts = text.split('|');
+
+    for (let i = 0; i < otherTexts.length; i++) {
+      if (otherTexts[i].trim()) step.description.push({text: otherTexts[i].trim()});
+      if (groupTexts[i].trim()) step.description.push({text: groupTexts[i].trim()});
+    }
+  }
+
+  _processGroup(group) {
+    const text = group.slice(1, -1).trim();
+    return text;
   }
 }
 
