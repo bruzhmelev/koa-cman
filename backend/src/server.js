@@ -37,6 +37,7 @@ app.use(require('koa-static')('./build'));
 app.use(router.allowedMethods());
 
 mongoose
+  .set('debug', true)
   .connect(
     'mongodb://cman.documents.azure.com:10255/?ssl=true&replicaSet=globaldb',
     {
@@ -47,6 +48,6 @@ mongoose
     }
   )
   .then(() => console.log('connection successful'))
-  .catch(err => console.error(err));
+  .catch(err => console.error(`username:${process.env.DB_USER}\npassword:${process.env.DB_PASSWORD}\nerror:\n${err}`));
 
 module.exports = app;
