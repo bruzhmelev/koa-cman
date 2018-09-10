@@ -124,13 +124,28 @@ class ScenarioParser {
 
     for (let i = 0; i < otherTexts.length; i++) {
       if (otherTexts[i].trim()) step.description.push({text: otherTexts[i].trim()});
-      if (groupTexts[i].trim()) step.description.push({text: groupTexts[i].trim()});
+      if (groupTexts[i].text || groupTexts[i].condition) step.description.push(groupTexts[i]);
     }
   }
 
-  _processGroup(group) {
-    const text = group.slice(1, -1).trim();
-    return text;
+  _processGroup(line) {
+    let text = line.slice(1, -1).trim();
+    const groups = text.match(/\{([^\{\}]*)\}/g);
+    if (!groups) return { text: text };
+
+    const textWithCondition = {};
+    
+    for (let g of groups) {
+      const t = g.slice(1, -1).trim();
+      if (t.startsWith('?') && parseInt(t.substr(1))) this._processVisit(t, textWithCondition);
+      else if (t.startsWith('?')) this._processCondition(t, textWithCondition);
+      
+      text = text.replace(g, '');
+    }
+
+    if (text.trim()) textWithCondition.text = text.trim();
+
+    return textWithCondition;
   }
 }
 
