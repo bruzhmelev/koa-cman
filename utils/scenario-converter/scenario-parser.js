@@ -20,7 +20,7 @@ class ScenarioParser {
       else if (line.startsWith('$')) this._processVariable(line, step);
       else if (line.startsWith('#')) this._processAnswer(line, step);
       else if (line.startsWith('%%')) this._processStatsAndChance(line, step);
-      else this._processText(line, step);
+      else this._processDescription(line, step);
     });
 
     return this._scenario;
@@ -97,7 +97,7 @@ class ScenarioParser {
     }
   }
 
-  _processText(line, step) {
+  _processDescription(line, step) {
     if (!step.description) step.description = []; 
     
     let text = line.replace(/[\r\n]+/g, '').trim();
