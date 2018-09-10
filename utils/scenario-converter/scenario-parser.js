@@ -16,6 +16,7 @@ class ScenarioParser {
       else if (line.startsWith('===')) step = this._processStep(line, quest);
       else if (line.startsWith('?')) this._processCondition(line, step);
       else if (line.startsWith('+') || line.startsWith('-')) this._processAffect(line, step);
+      else if (line.startsWith('$')) this._processVariable(line, step);
       else if (line.startsWith('#')) this._processAnswer(line, step);
       else if (line.startsWith('%%')) this._processStatsAndChance(line, step);
       else this._processText(line, step);
@@ -57,6 +58,13 @@ class ScenarioParser {
     const sign = line.substr(0, 1);
     const name = line.substr(1);
     step.affect[name] = sign === '+' ? 1 : -1;
+  }
+
+  _processVariable(line, step) {
+    if (!step.affect) step.affect = {};
+    const arr = line.substr(1).split(' ');
+    const val = arr.length > 1 ? parseInt(arr[1]) : 1;
+    step.affect[arr[0]] = val;
   }
 
   _processAnswer(line, step) {
