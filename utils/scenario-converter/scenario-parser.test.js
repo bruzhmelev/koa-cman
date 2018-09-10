@@ -3,7 +3,6 @@ const fs = require('fs');
 const util = require('util');
 
 fs.readFile = util.promisify(fs.readFile);
-fs.readdir = util.promisify(fs.readdir);
 
 const TEST_SCENARIO_DIR = './scenario-converter/tests/';
 
