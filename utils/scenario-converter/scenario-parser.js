@@ -45,7 +45,11 @@ class ScenarioParser {
   _processCondition(line, step) {
     if (!step.condition) step.condition = {}; 
     const name = line.substr(1);
-    step.condition[name] = 1;
+    if (parseInt(name)) {
+      step.condition["visit"] = parseInt(name);
+    } else {
+      step.condition[name] = 1;
+    }
   }
 
   _processAffect(line, step) {
