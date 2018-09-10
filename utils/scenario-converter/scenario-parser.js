@@ -16,7 +16,7 @@ class ScenarioParser {
       else if (line.startsWith('===')) step = this._processStep(line, quest);
       else if (line.startsWith('?') && parseInt(line.substr(1))) this._processVisit(line, step);
       else if (line.startsWith('?')) this._processCondition(line, step);
-      else if (line.startsWith('+') || line.startsWith('-')) this._processAffect(line, step);
+      else if ((line.startsWith('+') || line.startsWith('-')) && line[1] && line[1] !== ' ') this._processAffect(line, step);
       else if (line.startsWith('$')) this._processVariable(line, step);
       else if (line.startsWith('#')) this._processAnswer(line, step);
       else if (line.startsWith('%%')) this._processStatsAndChance(line, step);
