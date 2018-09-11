@@ -32,20 +32,47 @@ passport.use(
   })
 );
 
+// // https://github.com/mapmeld/koa-passport-example/blob/mongodb/auth.js
+// const FacebookStrategy = require('passport-facebook').Strategy;
+// passport.use(
+//   new FacebookStrategy(
+//     {
+//       clientID: 'your-client-id',
+//       clientSecret: 'your-secret',
+//       callbackURL:
+//         'http://localhost:' +
+//         (process.env.PORT || 3000) +
+//         '/auth/facebook/callback'
+//     },
+//     function(token, tokenSecret, profile, done) {
+//       // retrieve user ...
+//       storage.fetchUsersByName().then(user => done(null, user));
+//     }
+//   )
+// );
+
 const FacebookStrategy = require('passport-facebook').Strategy;
+// from https://www.djamware.com/post/59a6257180aca768e4d2b132/node-express-passport-facebook-twitter-google-github-login
+var User = require('./models/User');
+
 passport.use(
   new FacebookStrategy(
     {
-      clientID: 'your-client-id',
-      clientSecret: 'your-secret',
-      callbackURL:
-        'http://localhost:' +
-        (process.env.PORT || 3000) +
-        '/auth/facebook/callback'
+      clientID: '290170838239980',
+      clientSecret: '106448d32c26c7ae95d7314ff4b636b1',
+      callbackURL: 'http://127.0.0.1:4003/v1/auth/facebook/callback'
     },
-    function(token, tokenSecret, profile, done) {
-      // retrieve user ...
-      storage.fetchUsersByName().then(user => done(null, user));
+    function(accessToken, refreshToken, profile, done) {
+      User.findOrCreate(
+        { name: profile.displayName },
+        { name: profile.displayName, userid: profile.id },
+        function(err, user) {
+          if (err) {
+            return done(err);
+          }
+          done(null, user);
+        }
+      );
     }
   )
 );
@@ -68,20 +95,22 @@ passport.use(
 //   )
 // );
 
-const GoogleStrategy = require('passport-google-auth').Strategy;
-passport.use(
-  new GoogleStrategy(
-    {
-      clientId: 'your-client-id',
-      clientSecret: 'your-secret',
-      callbackURL:
-        'http://localhost:' +
-        (process.env.PORT || 3000) +
-        '/auth/google/callback'
-    },
-    function(token, tokenSecret, profile, done) {
-      // retrieve user ...
-      storage.fetchUserByToken().then(user => done(null, user));
-    }
-  )
-);
+// const GoogleStrategy = require('passport-google-auth').Strategy;
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientId: 'your-client-id',
+//       clientSecret: 'your-secret',
+//       callbackURL:
+//         'http://localhost:' +
+//         (process.env.PORT || 3000) +
+//         '/auth/google/callback'
+//     },
+//     function(token, tokenSecret, profile, done) {
+//       // retrieve user ...
+//       storage.fetchUserByToken().then(user => done(null, user));
+//     }
+//   )
+// );
+
+module.exports = passport;

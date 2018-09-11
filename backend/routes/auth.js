@@ -52,4 +52,18 @@ router.post('/login', async ctx => {
   })(ctx);
 });
 
+/* FACEBOOK ROUTER */
+router.get('/facebook', passport.authenticate('facebook'));
+
+router.get(
+  '/facebook/callback',
+  passport.authenticate('facebook', {
+    failureRedirect: '/loginfailureRedirect'
+  }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  }
+);
+
 module.exports = router.routes();

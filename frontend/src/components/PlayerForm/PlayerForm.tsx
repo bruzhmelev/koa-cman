@@ -45,6 +45,9 @@ export class PlayerForm extends React.Component<IStateProps & IDispatchProps, IP
                     <span onClick={this.signUpWithGoogleHandler}>google</span>
                 </div>
                 <div className="facebook-sign-up">
+                    <a href="/v1/auth/facebook">facebook a.href</a>
+                </div>
+                <div className="facebook-sign-up">
                     <span onClick={this.signUpWithFacebookHandler}>facebook</span>
                 </div>
                 <div className="vk-sign-up">

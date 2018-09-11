@@ -6,8 +6,11 @@ const PlayerSchema = new mongoose.Schema(
     name: { type: String },
     email: { type: String },
     bestScore: { type: Number },
-    userid: String,
-    updated_at: { type: Date, default: Date.now }
+    // userid: String,
+    // updated_at: { type: Date, default: Date.now },
+    facebook_id: { type: String },
+    twitter_id: { type: String },
+    google_id: { type: String }
   },
   { timestamps: true }
 );
