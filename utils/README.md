@@ -1,0 +1,30 @@
+# Dodo CMAN Utils
+
+## Scenario Converter
+Утилита, позволяющая конвертировать сценарий на естественном языке с определенной разметкой в JS-модуль, поддерживаемый движком игры.
+
+
+### Описание формата
+
+**Пример входного файла**: Сценарий с разметкой - [CMan - Общага](https://docs.google.com/document/d/1oms84nQLWnlZOJ6XxTsx9ENggGBwtjbXL0UHqLru7ik)
+
+**Описание формата сценария и пример выходного файла**: [CMan - формат сценария](https://docs.google.com/document/d/1gh1e_1v8LEEPMWRwFIoIctshRG6FqI4bR0iiwQyBtCA)
+
+### Установка утилиты Scenario Converter
+
+Перейти в каталог `utils` (внутри каталога с репозиторием) и установить необходимые NPM-пакеты:
+```
+cd utils
+npm install
+```
+
+### Использование утилиты Scenario Converter
+
+1. Сначала необходимо сохранить сценарий как обычный текстовый документ (.txt). В Google Docs это можно сделать через меню `Файл -> Скачать как -> Текст в формате TXT`
+
+2. Перейти в каталог `utils` (внутри каталога с репозиторием) и выполнить команду запуска конвертера, передав ей в качества аргумента путь к скачанному txt-файлу:
+```
+cd utils
+npm run sc <absolute path to txt file or filename inside scenario-converter folder>
+```
+3. В результате работы утилиты будет сформирован файл: `scenario-converter/output.js`
