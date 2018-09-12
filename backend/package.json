@@ -42,14 +42,14 @@
     "passport-facebook": "^2.1.1",
     "passport-github": "^1.1.0",
     "passport-google-auth": "^1.0.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "nodemon": "^1.17.5"
   },
   "devDependencies": {
     "@types/koa-passport": "^4.0.2",
     "chai": "^4.1.2",
     "chai-http": "^4.2.0",
     "mocha": "^5.2.0",
-    "nodemon": "^1.17.5",
     "sinon": "^6.2.0"
   }
 }
