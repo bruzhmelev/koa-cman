@@ -21,7 +21,7 @@
   "scripts": {
     "dev": "nodemon index",
     "start": "cross-env NODE_ENVIRONMENT=production node index",
-    "start-prod": "set NODE_ENVIRONMENT=production node index",
+    "start-heroku": "node index",
     "test": "./node_modules/mocha/bin/_mocha ./test/**/*.test.js"
   },
   "dependencies": {

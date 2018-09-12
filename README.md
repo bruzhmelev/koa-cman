@@ -81,3 +81,19 @@ response
 ```
 
 DELETE /v1/players/1 -> Delete player with id of 1
+
+## Heroku
+
+git remote -v
+
+```
+heroku  https://git.heroku.com/protected-coast-80963.git (fetch)
+heroku  https://git.heroku.com/protected-coast-80963.git (push)
+origin  git@github.com:bruzhmelev/koa-cman.git (fetch)
+origin  git@github.com:bruzhmelev/koa-cman.git (push)
+```
+
+git push heroku master
+heroku logs --tail
+
+heroku config:set NODE_ENVIRONMENT=production
