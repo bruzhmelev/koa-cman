@@ -50,8 +50,6 @@ app.use(router.routes());
 app.use(require('koa-static')('./build'));
 app.use(router.allowedMethods());
 
-console.log('--- PASS ----' + process.env.DB_PASSWORD);
-
 mongoose
   .connect(
     'mongodb://cman.documents.azure.com:10255/?ssl=true&replicaSet=globaldb',
