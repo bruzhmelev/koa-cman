@@ -1,1 +1,1 @@
-web: npm run install-all && npm run start
+web: npm run prod
