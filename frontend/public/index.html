@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
@@ -20,12 +21,25 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
-    <script type="text/javascript" src="./libs/jsview/jsview.dom.js"></script>
-    <script type="text/javascript" src="./libs/jsview/jsview.Template.js"></script>  
-  </head>
-  <body>
+    <!-- <script type="text/javascript" src="./libs/jsview/jsview.dom.js"></script>
+    <script type="text/javascript" src="./libs/jsview/jsview.Template.js"></script>   -->
+</head>
+
+<body>
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1&appId=290170838239980&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+    <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false"
+        data-auto-logout-link="false" data-use-continue-as="false"></div>
+
     <noscript>
-      You need to enable JavaScript to run this app.
+        You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
     <!--
@@ -40,100 +54,122 @@
     -->
 
     <div id="host" class="host wide">
-      <div>
-          Время: <span data-text="{hero.time}" data-at-class="{hero.late?'attention':''}"></span> |
-          Деньги: <span data-text="{hero.score}"></span> |
-          <span data-each="stat,statName in hero.stats"><span data-text="{stats[statName].title}"></span>: <span data-text="{hero.stats[statName]}"></span>&nbsp; </span> |
-          Раунд: <span data-text="{hero.round}"></span> |
-          Поездка: <span data-text="{hero.trip}"></span> |
-          Цель: <span data-text="{locations[hero.targetId].title}"></span>
-      </div>
-      <hr />
-      <div id="tasks">
-          <div class="title">Мои заказы</div>
-          <table data-at-class="{hero.tasks.length?'visible':'hidden'}">
-              <tr data-each="task,taskIndex in hero.tasks">
-                  <td><span data-text="{locations[task.targetId].title}"></span></td>
-                  <td style="text-align:right"><span data-text="{task.price}"></span> руб.</td>
-                  <td><span data-text="{task.status}"></span></td>
-              </tr>
-          </table>
-      </div>
-      <hr />
-      <div id="init" data-at-class="{hero.stageId=='init'?'visible':'hidden'}">
-          <div class="title" data-text="{stages[hero.stageId].title}"></div>
-          <div>Распрелите очки между характеристиками. Осталось: <span data-text="{hero.points}"></span></div>
-          <table>
-              <tr data-each="statValue,statName in hero.stats">
-                  <td><span data-text="{stats[statName].title}"></span></td>
-                  <td style="text-align:right"><span data-text="{statValue}"></span></td>
-                  <td><span class="button" data-on-click="allocatePoint(statName)">+</span></td>
-              </tr>
-          </table>
-      </div>
-      <div id="home" data-at-class="{hero.stageId=='home'?'visible':'hidden'}">
-          <div class="title" data-text="{stages[hero.stageId].title}"></div>
-          <div data-at-class="button {hero.points?'visible':'hidden'}" data-on-click="rest()">Отдохнуть</div>
-          <div class="button" data-on-click="startOrders()">Взять заказы</div>
-      </div>
-      <div id="orders" data-at-class="{hero.stageId=='orders'?'visible':'hidden'}">
-          <div class="panel1">
-              <div class="title" data-text="{stages[hero.stageId].title}"></div>
-              <table data-at-class="{orders?'visible':'hidden'}">
-                  <tr data-each="order,orderIndex in orders">
-                      <td><span data-text="{order.text}"></span></td>
-                      <td><span data-text="{locations[order.targetId].title}"></span></td>
-                      <td style="text-align:right"><span data-text="{order.price}"></span> руб.</td>
-                      <td><span class="button" data-on-click="addOrder(orderIndex)">Выбрать</span></td>
-                  </tr>
-              </table>
-              <div class="button" data-on-click="finishOrders()">Готово</div>
-          </div>
-          <div class="panel2">
-              <table>
-                  <tr data-each="road in roads">
-                      <td><span data-text="{locations[road.sourceId].title}"></span></td>
-                      <td><span data-text="{locations[road.targetId].title}"></span></td>
-                      <td style="text-align:right"><span data-text="{road.duration}"></span> мин.</td>
-                  </tr>
-              </table>
-          </div>
-      </div>
-      <div id="map" data-at-class="{hero.stageId=='map'?'visible':'hidden'}">
-          <div class="panel1">
-              <div class="title" data-text="{stages[hero.stageId].title}"></div>
-              <div class="button" data-on-click="goHome()">Домой</div>
-              <table data-at-class="{routes.length?'visible':'hidden'}">
-                  <tr data-each="route in routes">
-                      <td><span data-text="{locations[route.sourceId].title}"></span></td>
-                      <td><span data-text="{locations[route.targetId].title}"></span></td>
-                      <td style="text-align:right"><span data-text="{route.duration}"></span> мин.</td>
-                      <td><span data-at-class="button" data-on-click="startTrip(route.roadId)">Выбрать</span></td>
-                  </tr>
-              </table>
-          </div>
-          <div class="panel2">
-              <table>
-                  <tr data-each="road in roads">
-                      <td><span data-text="{locations[road.sourceId].title}"></span></td>
-                      <td><span data-text="{locations[road.targetId].title}"></span></td>
-                      <td style="text-align:right"><span data-text="{road.duration}"></span> мин.</td>
-                  </tr>
-              </table>
-          </div>
-      </div>
-      <div id="event" data-at-class="{hero.eventIndex==null?'hidden':'visible'}" data-using="event:events[hero.eventIndex]">
-          <div class="title" data-text="{stages[hero.stageId].title}"></div>
-          <div data-text="{event.text}"></div>
-          <div data-each="choice,choiceIndex in event.choices">
-              <div data-at-class="button {hero.choiceIndex==choiceIndex?'selected':''}" data-text="{choice.text}" data-on-click="makeChoice(choiceIndex)"></div>
-          </div>
-          <hr />
-      </div>
-      <div id="outcome" data-at-class="{hero.outcomeIndex==null?'hidden':'visible'}" data-using="event:events[hero.eventIndex];choice:event.choices[hero.choiceIndex];outcome:choice.outcomes[hero.outcomeIndex]">
-          <div data-text="{outcome.text}"></div>
-          <div class="button" data-on-click="nextEvent()">Дальше</div>
-      </div>
-  </div>
-  </body>
+        <div>
+            Время: <span data-text="{hero.time}" data-at-class="{hero.late?'attention':''}"></span> |
+            Деньги: <span data-text="{hero.score}"></span> |
+            <span data-each="stat,statName in hero.stats"><span data-text="{stats[statName].title}"></span>: <span
+                    data-text="{hero.stats[statName]}"></span>&nbsp; </span> |
+            Раунд: <span data-text="{hero.round}"></span> |
+            Поездка: <span data-text="{hero.trip}"></span> |
+            Цель: <span data-text="{locations[hero.targetId].title}"></span>
+        </div>
+        <hr />
+        <div id="tasks">
+            <div class="title">Мои заказы</div>
+            <table data-at-class="{hero.tasks.length?'visible':'hidden'}">
+                <tr data-each="task,taskIndex in hero.tasks">
+                    <td><span data-text="{locations[task.targetId].title}"></span></td>
+                    <td style="text-align:right"><span data-text="{task.price}"></span> руб.</td>
+                    <td><span data-text="{task.status}"></span></td>
+                </tr>
+            </table>
+        </div>
+        <hr />
+        <div id="init" data-at-class="{hero.stageId=='init'?'visible':'hidden'}">
+            <div class="title" data-text="{stages[hero.stageId].title}"></div>
+            <div>Распрелите очки между характеристиками. Осталось: <span data-text="{hero.points}"></span></div>
+            <table>
+                <tr data-each="statValue,statName in hero.stats">
+                    <td><span data-text="{stats[statName].title}"></span></td>
+                    <td style="text-align:right"><span data-text="{statValue}"></span></td>
+                    <td><span class="button" data-on-click="allocatePoint(statName)">+</span></td>
+                </tr>
+            </table>
+        </div>
+        <div id="home" data-at-class="{hero.stageId=='home'?'visible':'hidden'}">
+            <div class="title" data-text="{stages[hero.stageId].title}"></div>
+            <div data-at-class="button {hero.points?'visible':'hidden'}" data-on-click="rest()">Отдохнуть</div>
+            <div class="button" data-on-click="startOrders()">Взять заказы</div>
+        </div>
+        <div id="orders" data-at-class="{hero.stageId=='orders'?'visible':'hidden'}">
+            <div class="panel1">
+                <div class="title" data-text="{stages[hero.stageId].title}"></div>
+                <table data-at-class="{orders?'visible':'hidden'}">
+                    <tr data-each="order,orderIndex in orders">
+                        <td><span data-text="{order.text}"></span></td>
+                        <td><span data-text="{locations[order.targetId].title}"></span></td>
+                        <td style="text-align:right"><span data-text="{order.price}"></span> руб.</td>
+                        <td><span class="button" data-on-click="addOrder(orderIndex)">Выбрать</span></td>
+                    </tr>
+                </table>
+                <div class="button" data-on-click="finishOrders()">Готово</div>
+            </div>
+            <div class="panel2">
+                <table>
+                    <tr data-each="road in roads">
+                        <td><span data-text="{locations[road.sourceId].title}"></span></td>
+                        <td><span data-text="{locations[road.targetId].title}"></span></td>
+                        <td style="text-align:right"><span data-text="{road.duration}"></span> мин.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="map" data-at-class="{hero.stageId=='map'?'visible':'hidden'}">
+            <div class="panel1">
+                <div class="title" data-text="{stages[hero.stageId].title}"></div>
+                <div class="button" data-on-click="goHome()">Домой</div>
+                <table data-at-class="{routes.length?'visible':'hidden'}">
+                    <tr data-each="route in routes">
+                        <td><span data-text="{locations[route.sourceId].title}"></span></td>
+                        <td><span data-text="{locations[route.targetId].title}"></span></td>
+                        <td style="text-align:right"><span data-text="{route.duration}"></span> мин.</td>
+                        <td><span data-at-class="button" data-on-click="startTrip(route.roadId)">Выбрать</span></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel2">
+                <table>
+                    <tr data-each="road in roads">
+                        <td><span data-text="{locations[road.sourceId].title}"></span></td>
+                        <td><span data-text="{locations[road.targetId].title}"></span></td>
+                        <td style="text-align:right"><span data-text="{road.duration}"></span> мин.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="event" data-at-class="{hero.eventIndex==null?'hidden':'visible'}" data-using="event:events[hero.eventIndex]">
+            <div class="title" data-text="{stages[hero.stageId].title}"></div>
+            <div data-text="{event.text}"></div>
+            <div data-each="choice,choiceIndex in event.choices">
+                <div data-at-class="button {hero.choiceIndex==choiceIndex?'selected':''}" data-text="{choice.text}"
+                    data-on-click="makeChoice(choiceIndex)"></div>
+            </div>
+            <hr />
+        </div>
+        <div id="outcome" data-at-class="{hero.outcomeIndex==null?'hidden':'visible'}" data-using="event:events[hero.eventIndex];choice:event.choices[hero.choiceIndex];outcome:choice.outcomes[hero.outcomeIndex]">
+            <div data-text="{outcome.text}"></div>
+            <div class="button" data-on-click="nextEvent()">Дальше</div>
+        </div>
+    </div>
+</body>
+
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '290170838239980',
+            xfbml: true,
+            version: 'v3.1'
+        });
+        FB.AppEvents.logPageView();
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
 </html>

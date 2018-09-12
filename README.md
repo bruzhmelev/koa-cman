@@ -32,9 +32,25 @@ npm run build
   player {name, bestScore}
   playerActions (allocatePoint, rest, startOrder, finishOrder, addOrder, goHome, startTrip, makeChoice, next))
 - Moving State Management to Redux
-  -- Typing for every action in reducer
-  -- Flow our new Redux actions through our UI
+  - Typing for every action in reducer
+  - Flow our new Redux actions through our UI
 - Moving all sideeffect to sagas
+- auth
+
+  - app.keys = ['super-secret-key']; - In production, make sure to update the secret key, app.keys. For example, you can use Python to generate a secure key:
+  - require('./auth');
+  - ./auth `const fetchUser = (() => {`
+  - bcryptjs
+
+    ```
+    const bcrypt = require('bcryptjs');
+
+    function comparePass(userPassword, databasePassword) {
+      return bcrypt.compareSync(userPassword, databasePassword);
+    }
+    ```
+
+  - current stage `https://mherman.org/blog/user-authentication-with-passport-and-koa/` Logout
 
 ## Issues
 

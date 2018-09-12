@@ -1,8 +1,11 @@
 import * as React from 'react';
 import './App.css';
+import { connect } from 'react-redux';
+import { createPlayer, deletePlayer, fetchAllPlayers, updatePlayer } from 'actions/player';
 
 import { RController } from './ui/RController';
 import { stages } from './content/entities/stages';
+import { PlayerForm } from 'components/PlayerForm/PlayerForm';
 
 class App extends React.Component {
     state = {};
@@ -274,6 +277,7 @@ class App extends React.Component {
 
         return (
             <div className="host2 wide2">
+                <PlayerForm />
                 {this.renderStatsHeader(hero, locations, stats)}
                 <hr />
                 {this.renderMyCurrentOrders(hero, locations)}
