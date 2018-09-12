@@ -84,6 +84,8 @@ DELETE /v1/players/1 -> Delete player with id of 1
 
 ## Heroku
 
+https://protected-coast-80963.herokuapp.com/v1/auth/facebook
+
 git remote -v
 
 ```
