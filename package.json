@@ -10,7 +10,7 @@
     "install-all": "npm i && npm run ib && npm run if",
     "build": "cd frontend && npm run build"
   },
-  "devDependencies": {
+  "dependencies": {
     "concurrently": "^4.0.1"
   }
 }

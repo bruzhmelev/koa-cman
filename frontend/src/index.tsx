@@ -17,10 +17,10 @@ const composeEnhancers = windowIfDefined.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
 sagaMiddleware.run(rootSaga);
 
-var jsviewController: Controller;
-jsviewController = new Controller();
-jsviewController.run();
-jsviewController.render();
+// var jsviewController: Controller;
+// jsviewController = new Controller();
+// jsviewController.run();
+// jsviewController.render();
 
 ReactDOM.render(
     <Provider store={store}>
