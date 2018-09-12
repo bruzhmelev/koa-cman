@@ -10,7 +10,9 @@
     "ib": "cd backend && npm i && cd ../",
     "if": "cd frontend && npm i && cd ../",
     "install-all": "npm i && npm run ib && npm run if",
-    "build-front": "cd frontend && npm run build"
+    "build-front": "cd frontend && npm run build",
+    "heroku-prebuild": "npm run install-all",
+    "heroku-postbuild": "echo This runs afterwards."
   },
   "dependencies": {
     "concurrently": "^4.0.1"
