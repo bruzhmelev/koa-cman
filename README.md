@@ -32,9 +32,25 @@ npm run build
   player {name, bestScore}
   playerActions (allocatePoint, rest, startOrder, finishOrder, addOrder, goHome, startTrip, makeChoice, next))
 - Moving State Management to Redux
-  -- Typing for every action in reducer
-  -- Flow our new Redux actions through our UI
+  - Typing for every action in reducer
+  - Flow our new Redux actions through our UI
 - Moving all sideeffect to sagas
+- auth
+
+  - app.keys = ['super-secret-key']; - In production, make sure to update the secret key, app.keys. For example, you can use Python to generate a secure key:
+  - require('./auth');
+  - ./auth `const fetchUser = (() => {`
+  - bcryptjs
+
+    ```
+    const bcrypt = require('bcryptjs');
+
+    function comparePass(userPassword, databasePassword) {
+      return bcrypt.compareSync(userPassword, databasePassword);
+    }
+    ```
+
+  - current stage `https://mherman.org/blog/user-authentication-with-passport-and-koa/` Logout
 
 ## Issues
 
@@ -65,3 +81,21 @@ response
 ```
 
 DELETE /v1/players/1 -> Delete player with id of 1
+
+## Heroku
+
+https://protected-coast-80963.herokuapp.com/v1/auth/facebook
+
+git remote -v
+
+```
+heroku  https://git.heroku.com/protected-coast-80963.git (fetch)
+heroku  https://git.heroku.com/protected-coast-80963.git (push)
+origin  git@github.com:bruzhmelev/koa-cman.git (fetch)
+origin  git@github.com:bruzhmelev/koa-cman.git (push)
+```
+
+git push heroku master
+heroku logs --tail
+
+heroku config:set NODE_ENVIRONMENT=production
