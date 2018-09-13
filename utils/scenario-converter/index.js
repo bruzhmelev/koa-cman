@@ -14,7 +14,8 @@ fs.writeFile = util.promisify(fs.writeFile);
   const parser = new ScenarioParser();
   const scenarios = parser.parse(content.toString());
   const formattedOutput = await formatOutput(scenarios);
-  await fs.writeFile('output.js', formattedOutput, 'utf-8');
+  const outputPath = createOutputFilePath(filePath);
+  await fs.writeFile(outputPath, formattedOutput, 'utf-8');
 })()
   .catch(err => console.log(err));
 
@@ -22,4 +23,11 @@ async function formatOutput(scenarios) {
   const content = await fs.readFile('output-template.js', 'utf-8');
   const formattedScenarios = JSON.stringify(scenarios, null, 2);
   return content.toString().replace('[SCENARIOS]', formattedScenarios);
+}
+
+function createOutputFilePath(inputFilePath) {
+  const k = inputFilePath.lastIndexOf('.');
+
+  if (k < 0) return inputFilePath + '.js';  
+  return inputFilePath.replace(/[^.]+$/, 'js');
 }
