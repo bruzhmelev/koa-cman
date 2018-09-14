@@ -96,56 +96,93 @@ class ScenarioParser {
       step.roll = {stat: val};
     }
   }
-
-  _processDescription(line, step) {
+  
+  _processDescription(line, step, isNewLine = true) {
     if (!step.description) step.description = []; 
     
     let text = line.replace(/[\r\n]+/g, '').trim();
     if (!text) return;
 
-    if (step.description.length > 0) {
+    if (step.description.length > 0 && isNewLine) {
       step.description.push({br: true});
     }
 
-    const groups = text.match(/\[([^\[\]]*)\]/g);
-    if (!groups) {
-      step.description.push({text: text});
+    const groups = this._extractTextGroups(text);
+
+    if (groups) {
+      for (let g of groups) {
+        this._processDescription(g, step, false);
+      }
       return;
     }
 
+    for (let t of this._processTextSpecialCases(text)) {
+      step.description.push(t);
+    }
+  }  
+
+  _extractTextGroups(text) {
+    const groups = text.match(/\[([^\[\]]*)\]/g);    
+    if (!groups) return null;
+
     const groupTexts = [];
     for (let g of groups) {
-      groupTexts.push(this._processGroup(g));
+      groupTexts.push(g.slice(1, -1).trim());
       text = text.replace(g, '|');
     }
-    groupTexts.push('');
 
     const otherTexts = text.split('|');
-
+    const resultTexts = [];
     for (let i = 0; i < otherTexts.length; i++) {
-      if (otherTexts[i].trim()) step.description.push({text: otherTexts[i].trim()});
-      if (groupTexts[i].text || groupTexts[i].condition) step.description.push(groupTexts[i]);
+      if (otherTexts[i].trim()) resultTexts.push(otherTexts[i].trim());
+      if (groupTexts[i]) resultTexts.push(groupTexts[i]);
     }
+
+    return resultTexts;
   }
 
-  _processGroup(line) {
-    let text = line.slice(1, -1).trim();
+  _processTextSpecialCases(text) {
     const groups = text.match(/\{([^\{\}]*)\}/g);
-    if (!groups) return { text: text };
+    if (!groups) return [{ text: text }];
 
+    const variables = [];
     const textWithCondition = {};
     
     for (let g of groups) {
       const t = g.slice(1, -1).trim();
-      if (t.startsWith('?') && parseInt(t.substr(1))) this._processVisit(t, textWithCondition);
-      else if (t.startsWith('?')) this._processCondition(t, textWithCondition);
-      
-      text = text.replace(g, '');
+      if (t.startsWith('?')) {
+        if (parseInt(t.substr(1))) this._processVisit(t, textWithCondition);
+        else this._processCondition(t, textWithCondition);
+        text = text.replace(g, '');
+      } else if (t.startsWith('$')) {
+        variables.push({ variable: t.substr(1).trim() })
+        text = text.replace(g, '|');
+      } else {
+        text = text.replace(g, '');
+      }
     }
 
-    if (text.trim()) textWithCondition.text = text.trim();
+    const otherTexts = text.split('|');
+    const resultTexts = [];
 
-    return textWithCondition;
+    for (let i = 0; i < otherTexts.length; i++) {
+      if (otherTexts[i].trim()) {
+        if (textWithCondition.condition) {
+          resultTexts.push({ text: otherTexts[i].trim(), condition: textWithCondition.condition });
+        } else {
+          resultTexts.push({ text: otherTexts[i].trim() });
+        }
+      }
+
+      if (variables[i]) {
+        if (textWithCondition.condition) {
+          variables[i].condition = textWithCondition.condition;
+        }
+        resultTexts.push(variables[i]);
+      }
+    }
+
+    return resultTexts;
   }
 }
 
