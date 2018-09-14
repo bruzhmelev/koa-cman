@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "jest": "^23.5.0"
+  },
+  "dependencies": {
+    "json-eval": "^1.0.1"
   }
 }

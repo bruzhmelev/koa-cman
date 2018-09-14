@@ -1,3 +1,5 @@
+const jsonEval = require('json-eval');
+
 class ScenarioParser {
   constructor() {
     this._scenario = [];
@@ -6,14 +8,30 @@ class ScenarioParser {
   parse(content) {
     let quest;
     let step;
+    let json = '';
+    let isJsonStep = false;
 
     const lines = content.match(/[^\r\n]+/g);
     lines.forEach((line) => {
       line = line.trim();
       if (!line) return;
 
+      if (json) {
+        if (line.startsWith('}}')) { 
+          step = this._processJson(json + '}}', step, quest); 
+          isJsonStep = true; 
+          json = '';
+        } else { 
+          json += line.replace(/[\r\n]+/g, '').trim();
+        }
+        return;
+      }
+
       if (line.startsWith('---')) quest = this._processQuest(line);
-      else if (line.startsWith('===')) step = this._processStep(line, quest);
+      else if (line.startsWith('===')) { step = this._processStep(line, quest); isJsonStep = false; }
+      else if (line.startsWith('{{') && line.endsWith('}}')) { step = this._processJson(line, step, quest); isJsonStep = true; }
+      else if (line.startsWith('{{')) { json = '{{'; }
+      else if (isJsonStep) return;
       else if (line.startsWith('?') && parseInt(line.substr(1))) this._processVisit(line, step);
       else if (line.startsWith('?')) this._processCondition(line, step);
       else if ((line.startsWith('+') || line.startsWith('-')) && line[1] && line[1] !== ' ') this._processAffect(line, step);
@@ -42,6 +60,14 @@ class ScenarioParser {
     };
     quest.steps.push(step);
     return step;
+  }
+
+  _processJson(line, step, quest) {
+    const innerText = line.slice(1, -1).trim();
+    const jsonStep = jsonEval(innerText);
+    jsonStep.name = step.name;
+    quest.steps[quest.steps.length - 1] = jsonStep;
+    return jsonStep;
   }
 
   _processCondition(line, step) {
