@@ -32,6 +32,7 @@ class ScenarioParser {
       else if (line.startsWith('{{') && line.endsWith('}}')) { step = this._processJson(line, step, quest); isJsonStep = true; }
       else if (line.startsWith('{{')) { json = '{{'; }
       else if (isJsonStep) return;
+      else if (line.startsWith('>>')) this._processParent(line, step);
       else if (line.startsWith('?') && parseInt(line.substr(1))) this._processVisit(line, step);
       else if (line.startsWith('?')) this._processCondition(line, step);
       else if ((line.startsWith('+') || line.startsWith('-')) && line[1] && line[1] !== ' ') this._processAffect(line, step);
@@ -68,6 +69,13 @@ class ScenarioParser {
     jsonStep.name = step.name;
     quest.steps[quest.steps.length - 1] = jsonStep;
     return jsonStep;
+  }
+
+  _processParent(line, step) {
+    line = line.replace('>>', '');
+    const arr = line.split('@');
+    if (arr[1] && arr[1].trim()) step.parent = { step: arr[0].trim(), quest: arr[1].trim() };
+    else step.parent = { step: arr[0].trim() };
   }
 
   _processCondition(line, step) {
