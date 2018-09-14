@@ -99,3 +99,19 @@ git push heroku master
 heroku logs --tail
 
 heroku config:set NODE_ENVIRONMENT=production
+
+## Docker
+
+Билд бэкенда: 
+```bash
+docker build -t cman-backend .
+```
+Запуск контейнера бэкенда: 
+```bash
+docker run --rm -p 4000:4000 -ti --env-file .env cman-backend
+```
+
+Запуск bash в контейнере бэкенда: 
+```bash
+docker run --rm -p 4000:4000 -ti --env-file .env cman-backend bash
+```
