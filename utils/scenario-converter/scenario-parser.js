@@ -32,6 +32,8 @@ class ScenarioParser {
       else if (line.startsWith('{{') && line.endsWith('}}')) { step = this._processJson(line, step, quest); isJsonStep = true; }
       else if (line.startsWith('{{')) { json = '{{'; }
       else if (isJsonStep) return;
+      else if (line.startsWith('!success')) step.success = 1;
+      else if (line.startsWith('!fail')) step.fail = 1;
       else if (line.startsWith('>>')) this._processParent(line, step);
       else if (line.startsWith('?') && parseInt(line.substr(1))) this._processVisit(line, step);
       else if (line.startsWith('?')) this._processCondition(line, step);
