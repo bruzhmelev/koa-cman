@@ -52,11 +52,11 @@ app.use(router.allowedMethods());
 
 mongoose
   .connect(
-    'mongodb://cman.documents.azure.com:10255/?ssl=true&replicaSet=globaldb',
+    'mongodb://cman.documents.azure.com:10255/admin?ssl=true&replicaSet=globaldb',
     {
       auth: {
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD
+        user: 'cman',
+        password: 'DmHiPh08m0hQsopkeUWHxHT1PmfHlIOWfbRnAx7vzvVTPMwwPWmlRMBNNhg5eW7X4hJF4xThQuG6LRF3UVAh0Q=='
       }
     }
   )
