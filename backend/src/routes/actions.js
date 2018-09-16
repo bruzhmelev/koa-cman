@@ -2,7 +2,8 @@ const Router = require('koa-router');
 const router = new Router();
 const Ctrl = require('../controllers/actions');
 
-router.post('/', Ctrl.run);
+router.post('/run', Ctrl.run);
+router.post('/allocatePoint', Ctrl.allocatePoint);
 // router.post('/', Ctrl.allocatePoint);
 // router.post('/:id', Ctrl.rest);
 // router.post('/:id', Ctrl.startOrders);

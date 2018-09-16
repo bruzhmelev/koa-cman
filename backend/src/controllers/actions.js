@@ -1,7 +1,9 @@
-const LogicService = require('../domain/services/LogicService');
+// const LogicService = require('../domain/services/LogicService');
+import { LogicService } from '../domain/services/LogicService';
 
 module.exports = {
   run,
+  allocatePoint,
   findAll,
   create,
   destroy,
@@ -9,8 +11,21 @@ module.exports = {
 };
 
 async function run(ctx) {
-  let model = LogicService.run();
-  ctx.body = model;
+  let service = new LogicService();
+  let model = service.run();
+  ctx.body = { model };
+}
+
+async function allocatePoint(ctx) {
+  let stat = ctx.request.body.stat;
+  console.log('--- STAT ---: ' + JSON.stringify(stat));
+  let service = new LogicService();
+  // HACK:   let model = service.run();
+  // TODO: После каждого действия нужно куда-то ходить сохранять состояние model
+  // TODO: REFACTORING. Каждый раз гонять модель целиком по сети при том в таком виде как она есть сейчас это жесть.
+  let model = service.run();
+  let model = service.allocatePoint(stat);
+  ctx.body = { model };
 }
 
 async function findAll(ctx) {

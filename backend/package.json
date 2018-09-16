@@ -19,18 +19,12 @@
   "version": "1.2.0",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
     "start": "cross-env NODE_ENVIRONMENT=production npm run build:live",
-    "start-js": "cross-env NODE_ENVIRONMENT=production nodemon index",
-    "start-heroku": "node index",
-    "build": "tsc -p .",
-    "build:live": "nodemon --watch '**/*.{js,ts}' --exec 'ts-node' ./index.js",
-    "dev": "nodemon index",
-=======
-    "dev": "nodemon ./src/index",
-    "start": "cross-env NODE_ENVIRONMENT=production node ./src/index",
+    "start-js": "cross-env NODE_ENVIRONMENT=production nodemon ./src/index",
     "start-heroku": "node ./src/index",
->>>>>>> origin/master
+    "build": "tsc -p .",
+    "build:live": "nodemon --watch '**/*.{js,ts}' --exec 'ts-node' ./src/index.js",
+    "dev": "nodemon ./src/index",
     "test": "./node_modules/mocha/bin/_mocha ./test/**/*.test.js"
   },
   "dependencies": {

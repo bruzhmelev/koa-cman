@@ -6,7 +6,7 @@ import { events } from '../content/entities/events';
 import { heroManager } from '../logic/HeroManager';
 import { taskManager } from '../logic/TaskManager';
 
-export class RController {
+export class LogicService {
   run() {
     this.model = {
       stats: stats,
