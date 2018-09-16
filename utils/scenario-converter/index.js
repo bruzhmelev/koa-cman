@@ -27,7 +27,6 @@ async function formatOutput(scenarios) {
 
 function createOutputFilePath(inputFilePath) {
   const k = inputFilePath.lastIndexOf('.');
-
   if (k < 0) return inputFilePath + '.js';  
   return inputFilePath.replace(/[^.]+$/, 'js');
 }

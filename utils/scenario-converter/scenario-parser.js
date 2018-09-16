@@ -27,7 +27,7 @@ class ScenarioParser {
         return;
       }
 
-      if (line.startsWith('---')) quest = this._processQuest(line);
+      if (line.startsWith('---')) { quest = this._processQuest(line); step = null; }
       else if (line.startsWith('===')) { step = this._processStep(line, quest); isJsonStep = false; }
       else if (line.startsWith('{{') && line.endsWith('}}')) { step = this._processJson(line, step, quest); isJsonStep = true; }
       else if (line.startsWith('{{')) { json = '{{'; }
@@ -35,8 +35,8 @@ class ScenarioParser {
       else if (line.startsWith('!success')) step.success = 1;
       else if (line.startsWith('!fail')) step.fail = 1;
       else if (line.startsWith('>>')) this._processParent(line, step);
-      else if (line.startsWith('?') && parseInt(line.substr(1))) this._processVisit(line, step);
-      else if (line.startsWith('?')) this._processCondition(line, step);
+      else if (line.startsWith('?') && parseInt(line.substr(1))) this._processVisit(line, (step ? step : quest));
+      else if (line.startsWith('?')) this._processCondition(line, (step ? step : quest));
       else if ((line.startsWith('+') || line.startsWith('-')) && line[1] && line[1] !== ' ') this._processAffect(line, step);
       else if (line.startsWith('$')) this._processVariable(line, step);
       else if (line.startsWith('#')) this._processAnswer(line, step);
