@@ -1,0 +1,12 @@
+version: '2'
+services:
+  backend:
+    container_name: cman-backend-dev
+    image: cman-backend-dev
+    build:
+      context: ./
+      dockerfile: ./dev.Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./src:/app/src

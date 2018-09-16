@@ -17,7 +17,7 @@
   "author": "Daniel Balastegui",
   "license": "MIT",
   "version": "1.2.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "cross-env NODE_ENVIRONMENT=production npm run build:live",
     "start-js": "cross-env NODE_ENVIRONMENT=production nodemon ./src/index",
@@ -25,7 +25,8 @@
     "build": "tsc -p .",
     "build:live": "nodemon --watch '**/*.{js,ts}' --exec 'ts-node' ./src/index.js",
     "dev": "nodemon ./src/index",
-    "test": "./node_modules/mocha/bin/_mocha ./test/**/*.test.js"
+    "test": "./node_modules/mocha/bin/_mocha ./test/**/*.test.js",
+    "dev-docker": "docker-compose -f dev-docker-compose.yml build & docker-compose -f dev-docker-compose.yml up --force-recreate"
   },
   "dependencies": {
     "@koa/cors": "^2.2.1",
