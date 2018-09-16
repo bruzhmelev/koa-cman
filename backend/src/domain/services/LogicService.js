@@ -7,6 +7,22 @@ import { heroManager } from '../logic/HeroManager';
 import { taskManager } from '../logic/TaskManager';
 
 export class LogicService {
+  constructor(model) {
+    console.log('----- LogicService model -----' + JSON.stringify(model));
+    if (!model) {
+      this.model = {
+        stats: stats,
+        roads: roads,
+        locations: locations,
+        events: events,
+        hero: heroManager.createHero()
+      };
+      return;
+    }
+
+    this.model = model;
+  }
+
   run() {
     this.model = {
       stats: stats,

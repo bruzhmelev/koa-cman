@@ -46,6 +46,8 @@ app.use(passport.session());
 app.use(async (ctx, next) => {
   // ignore favicon
   if (ctx.path === '/favicon.ico') return;
+  let model = getModel();
+  ctx.request.body = { ...ctx.request.body, model };
   await next();
   saveModel(ctx.body.model);
 });
