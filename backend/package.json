@@ -19,9 +19,9 @@
   "version": "1.2.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index",
-    "start": "cross-env NODE_ENVIRONMENT=production node index",
-    "start-heroku": "node index",
+    "dev": "nodemon ./src/index",
+    "start": "cross-env NODE_ENVIRONMENT=production node ./src/index",
+    "start-heroku": "node ./src/index",
     "test": "./node_modules/mocha/bin/_mocha ./test/**/*.test.js"
   },
   "dependencies": {
