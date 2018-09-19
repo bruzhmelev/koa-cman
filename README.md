@@ -31,12 +31,10 @@ npm run build
 - Fetching data from backend (
   player {name, bestScore}
   playerActions (allocatePoint, rest, startOrder, finishOrder, addOrder, goHome, startTrip, makeChoice, next))
-  - // TODO: После каждого действия нужно куда-то ходить сохранять состояние model
-  - // TODO: REFACTORING. Каждый раз гонять модель целиком по сети при том в таком виде как она есть сейчас это жесть.
 - Moving State Management to Redux
   - Typing for every action in reducer
   - Flow our new Redux actions through our UI
-- Moving all side-effect to sagas
+- Moving all sideeffect to sagas
 - auth
 
   - app.keys = ['super-secret-key']; - In production, make sure to update the secret key, app.keys. For example, you can use Python to generate a secure key:
@@ -104,20 +102,16 @@ heroku config:set NODE_ENVIRONMENT=production
 
 ## Docker
 
-Билд бэкенда:
-
+Билд бэкенда: 
 ```bash
 docker build -t cman-backend .
 ```
-
-Запуск контейнера бэкенда:
-
+Запуск контейнера бэкенда: 
 ```bash
 docker run --rm -p 4000:4000 -ti --env-file .env cman-backend
 ```
 
-Запуск bash в контейнере бэкенда:
-
+Запуск bash в контейнере бэкенда: 
 ```bash
 docker run --rm -p 4000:4000 -ti --env-file .env cman-backend bash
 ```
