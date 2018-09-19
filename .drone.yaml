@@ -1,0 +1,5 @@
+pipeline:
+  docker:
+    image: docker
+    commands:
+      - echo 'Hello world!'
