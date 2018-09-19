@@ -1,5 +1,32 @@
 pipeline:
-  docker:
+  build:
     image: docker
     commands:
-      - echo 'Hello world!'
+      - docker build -t dodoreg.azurecr.io/cman-backend:1.0.1 ./backend 
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  
+  push:
+    image: docker
+    commands:
+      - docker login $DOCKER_SERVER -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - docker push dodoreg.azurecr.io/cman-backend:1.0.1
+    secrets: [ docker_username, docker_password, docker_server ]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      
+  helm-deploy-dev:
+    image: quay.io/ipedrazas/drone-helm
+    chart: geoservice
+    release: geoservice-${DRONE_DEPLOY_TO}
+    values: image.tag=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7},environment=${DRONE_DEPLOY_TO}
+    namespace: ${DRONE_DEPLOY_TO}
+    tiller_ns: kube-system
+    prefix: DEV
+    update_dependencies: true
+    skip_tls_verify: true
+    secrets: [ dev_api_server, dev_kubernetes_token, dev_kubernetes_certificate ]
+    when:
+      event: [ deployment ]
+      environment:
+        exclude: [ production ]
