@@ -19,11 +19,14 @@
   "version": "1.2.0",
   "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon ./src/index",
-    "start": "cross-env NODE_ENVIRONMENT=production node ./src/index",
+    "start": "cross-env NODE_ENVIRONMENT=production npm run build:live",
+    "start-js": "cross-env NODE_ENVIRONMENT=production nodemon ./src/index",
     "start-heroku": "node ./src/index",
-	"test": "./node_modules/mocha/bin/_mocha ./test/**/*.test.js",
-	"dev-docker": "docker-compose -f dev-docker-compose.yml build & docker-compose -f dev-docker-compose.yml up --force-recreate"
+    "build": "tsc -p .",
+    "build:live": "nodemon --watch '**/*.{js,ts}' --exec 'ts-node' ./src/index.js",
+    "dev": "nodemon ./src/index",
+    "test": "./node_modules/mocha/bin/_mocha ./test/**/*.test.js",
+    "dev-docker": "docker-compose -f dev-docker-compose.yml build & docker-compose -f dev-docker-compose.yml up --force-recreate"
   },
   "dependencies": {
     "@koa/cors": "^2.2.1",
@@ -49,9 +52,12 @@
   },
   "devDependencies": {
     "@types/koa-passport": "^4.0.2",
+    "@types/node": "^10.9.4",
     "chai": "^4.1.2",
     "chai-http": "^4.2.0",
     "mocha": "^5.2.0",
-    "sinon": "^6.2.0"
+    "sinon": "^6.2.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3"
   }
 }
