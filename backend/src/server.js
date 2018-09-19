@@ -8,7 +8,6 @@ const passport = require('koa-passport');
 const Helmet = require('koa-helmet');
 const respond = require('koa-respond');
 const mongoose = require('mongoose');
-import { getModel, saveModel } from './stores/modelStore';
 
 const app = new Koa();
 const router = new Router();
@@ -20,7 +19,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // sessions
-app.keys = ['super-secret-key-434tty'];
+app.keys = ['super-secret-key'];
 app.use(session(app));
 
 app.use(Cors());
@@ -43,15 +42,6 @@ require('./auth');
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(async (ctx, next) => {
-  // ignore favicon
-  if (ctx.path === '/favicon.ico') return;
-  let model = getModel();
-  ctx.request.body = { ...ctx.request.body, model };
-  await next();
-  saveModel(ctx.body.model);
-});
-
 app.use(respond());
 
 // API routes
@@ -66,8 +56,7 @@ mongoose
     {
       auth: {
         user: 'cman',
-        password:
-          'DmHiPh08m0hQsopkeUWHxHT1PmfHlIOWfbRnAx7vzvVTPMwwPWmlRMBNNhg5eW7X4hJF4xThQuG6LRF3UVAh0Q=='
+        password: 'DmHiPh08m0hQsopkeUWHxHT1PmfHlIOWfbRnAx7vzvVTPMwwPWmlRMBNNhg5eW7X4hJF4xThQuG6LRF3UVAh0Q=='
       }
     }
   )
